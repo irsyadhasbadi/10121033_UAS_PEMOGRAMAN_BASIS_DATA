@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kehadiran Pegawai</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="sidebar">
+            <button onclick="window.location.href='tambah_kehadiran.html'">Tambah Kehadiran</button>
+            <button onclick="window.location.href='index.html'">Kembali Ke Dashboard</button>
+        </div>
+
+ 
+        <div class="content">
+            <h2>Kehadiran Pegawai</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pegawai</th>
+                        <th>Nama</th>
+                        <th>Bulan</th>
+                        <th>Rekap Hadir</th>
+                        <th>Detail Kehadiran</th>
+                    </tr>
+                </thead>
+                <tbody id="kehadiran-list">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // ngambil data dari php
+        fetch("kehadiran.php")
+        .then(response => response.json())
+        .then(data => {
+            let table = document.getElementById("kehadiran-list");
+
+            data.forEach(kehadiran => {
+                let detailKehadiran = kehadiran.kehadiran.map(h => `${h.tanggal} (${h.status})`).join("<br>");
+
+                let row = `<tr>
+                    <td>${kehadiran.id_pegawai}</td>
+                    <td>${kehadiran.nama}</td>
+                    <td>${kehadiran.bulan}</td>
+                    <td>${kehadiran.total_hadir} Hari</td>
+                    <td>${detailKehadiran}</td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        })
+        .catch(error => console.error("Error:", error));
+    </script>
+
+</body>
+</html>

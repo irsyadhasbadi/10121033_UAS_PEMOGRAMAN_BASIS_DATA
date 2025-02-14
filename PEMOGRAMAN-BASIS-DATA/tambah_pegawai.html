@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Pegawai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tambah Pegawai</h2>
+        <form id="form-tambah">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama pegawai" required>
+
+            <label for="jabatan">Jabatan</label>
+            <input type="text" id="jabatan" name="jabatan" placeholder="Masukkan jabatan" required>
+
+            <label for="gaji">Gaji</label>
+            <input type="number" id="gaji" name="gaji" placeholder="Masukkan gaji" required>
+
+            <label for="id_departemen">Departemen</label>
+            <select id="id_departemen" name="id_departemen">
+                <option value="1">Resepsionis</option>
+                <option value="2">Housekeeping</option>
+                <option value="3">Keamanan</option>
+                <option value="4">F&B Service</option>
+                <option value="5">Teknisi</option>
+                <option value="5">CEO</option>
+            </select>
+
+            <button type="submit">Tambah Pegawai</button>
+        </form>
+        <a href="index.html" class="back-link">Kembali ke Data Pegawai</a>
+    </div>
+
+    <script>
+        document.getElementById("form-tambah").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+
+            fetch("tambah_pegawai.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                alert(result);
+                window.location.href = "index.html";
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
